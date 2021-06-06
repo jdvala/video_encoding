@@ -1,5 +1,6 @@
 # Utils functions
 import os
+import shutil
 
 
 def get_file_name_extension(path):
@@ -13,5 +14,17 @@ def get_file_name_extension(path):
     """
     if not isinstance(path, str):
         return
-    filename, file_extension = os.path.splitext(path)
+    filepath, file_extension = os.path.splitext(path)
+
+    filename = os.path.split(filepath)[-1]
+
     return filename, file_extension
+
+
+def clean_up(path):
+    """Remove the folder
+
+    Args:
+        path (str): Path or folder to remove.
+    """
+    shutil.rmtree(path)

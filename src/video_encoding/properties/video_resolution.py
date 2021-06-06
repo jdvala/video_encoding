@@ -1,3 +1,8 @@
+from collections import namedtuple
+
+Resolution = namedtuple("Resolution", "width height")
+
+
 class VideoResolution:
     """For all the resolutions."""
 
@@ -11,34 +16,15 @@ class VideoResolution:
             "1080": {"width": 1920, "height": 1080},
         }
 
-    @property
-    def width_360(self):
-        return self.resolutions.get("360").get("width")
+    def get_w_h(self, resolution):
+        if not isinstance(resolution, str):
+            raise ValueError(
+                f"Resolution should of a string, but instead is of type {type(resolution)}"
+            )
+        items = self.resolutions.get(resolution)
+        if not items:
+            raise ValueError(
+                f"Resolution provided is not valid, the values available currently are 360p, 480p, 720p, 1080p"
+            )
 
-    @property
-    def height_360(self):
-        return self.resolutions.get("360").get("height")
-
-    @property
-    def width_480(self):
-        return self.resolutions.get("480").get("width")
-
-    @property
-    def height_480(self):
-        return self.resolutions.get("480").get("height")
-
-    @property
-    def width_720(self):
-        return self.resolutions.get("720").get("width")
-
-    @property
-    def height_720(self):
-        return self.resolutions.get("720").get("height")
-
-    @property
-    def width_1080(self):
-        return self.resolutions.get("1080").get("width")
-
-    @property
-    def height_1080(self):
-        return self.resolutions.get("1080").get("height")
+        return Resolution(width=items["width"], height=items["height"])
