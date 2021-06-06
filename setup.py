@@ -32,12 +32,9 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     entry_points={
-        "console_scripts": [
-            "video_encoding = video_encoding.cli:entrypoint"
-        ]
+        "console_scripts": ["video_encoding = video_encoding.cli:entrypoint"]
     },
     author="Jay Vala",
     author_email="jay.vala@msn.com",
     url="https://github.com/jdvala/video_encoding",
 )
-

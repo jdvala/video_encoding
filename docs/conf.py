@@ -59,18 +59,14 @@ templates_path = ["_templates"]
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-source_suffix = {
-        ".rst": "restructuredtext",
-        ".txt": "markdown",
-        ".md": "markdown",
-}
+source_suffix = {".rst": "restructuredtext", ".txt": "markdown", ".md": "markdown"}
 
 # The master toctree document.
 master_doc = "index"
 
 # General information about the project.
 project = u"video-encoding"
-copyright = u'2021, Jay Vala'
+copyright = u"2021, Jay Vala"
 author = u"Jay Vala"
 
 # The version info for the project you"re documenting, acts as replacement
@@ -112,10 +108,7 @@ html_theme = "sphinx_rtd_theme"
 # theme further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    "collapse_navigation": False,
-    "prev_next_buttons_location": "top",
-}
+html_theme_options = {"collapse_navigation": False, "prev_next_buttons_location": "top"}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -135,15 +128,12 @@ latex_elements = {
     # The paper size ("letterpaper" or "a4paper").
     #
     # "papersize": "letterpaper",
-
     # The font size ("10pt", "11pt" or "12pt").
     #
     # "pointsize": "10pt",
-
     # Additional stuff for the LaTeX preamble.
     #
     # "preamble": "",
-
     # Latex figure (float) alignment
     #
     # "figure_align": "htbp",
@@ -153,9 +143,13 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "video_encoding.tex",
-     u"video-encoding Documentation",
-     u"Jay Vala", "manual"),
+    (
+        master_doc,
+        "video_encoding.tex",
+        u"video-encoding Documentation",
+        u"Jay Vala",
+        "manual",
+    )
 ]
 
 
@@ -164,9 +158,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "video_encoding",
-     u"video-encoding Documentation",
-     [author], 1)
+    (master_doc, "video_encoding", u"video-encoding Documentation", [author], 1)
 ]
 
 
@@ -176,10 +168,13 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, "video_encoding",
-     u"video-encoding Documentation",
-     author,
-     "video_encoding",
-     "One line description of project.",
-     "Miscellaneous"),
+    (
+        master_doc,
+        "video_encoding",
+        u"video-encoding Documentation",
+        author,
+        "video_encoding",
+        "One line description of project.",
+        "Miscellaneous",
+    )
 ]
