@@ -16,7 +16,21 @@ info_logger = structlog.get_logger(component="video_infromation")
 Video_information = namedtuple("VideoInfo", "frame_rate width height total_frames")
 
 
-def get_video_information(video):
+def get_video_information(video: cv2.VideoCapture) -> Video_information:
+    """Collect and present information about the video.
+
+    This function get the following information about a video.
+    * Frame Rate
+    * Width of the video.
+    * Height of the video.
+    * Total frames in a video.
+
+    Args:
+        video (cv2.VideoCapture): Video for which the information is required.
+
+    Returns:
+        Video_information: Frame rate, width, height and total frames in a video.
+    """
     frame_rate = _get_frame_rate(video)
     width = _get_width_video(video)
     height = _get_height_video(video)
@@ -27,14 +41,14 @@ def get_video_information(video):
     )
 
 
-def _get_frame_rate(video):
-    """[summary]
+def _get_frame_rate(video: cv2.VideoCapture) -> float:
+    """Get the frame rate of the video.
 
     Args:
-        video ([type]): [description]
+        video (cv2.VideoCapture): Video for which the frame rate is required.
 
     Returns:
-        [type]: [description]
+        float: Frame rate of the video.
     """
     if _check_video_type(video):
         return
@@ -42,14 +56,14 @@ def _get_frame_rate(video):
     return frame_rate
 
 
-def _get_width_video(video):
-    """[summary]
+def _get_width_video(video: cv2.VideoCapture) -> int:
+    """Get the height of the video.
 
     Args:
-        video ([type]): [description]
+        video (cv2.VideoCapture): Video for which the frame rate is required.
 
     Returns:
-        [type]: [description]
+        int: Width of the video.
     """
     if _check_video_type(video):
         return
@@ -58,14 +72,14 @@ def _get_width_video(video):
     return width
 
 
-def _get_height_video(video):
-    """[summary]
+def _get_height_video(video: cv2.VideoCapture) -> int:
+    """Get the height of the video.
 
     Args:
-        video ([type]): [description]
+        video (cv2.VideoCapture): Video for which the frame rate is required.
 
     Returns:
-        [type]: [description]
+        int: Height of the video.
     """
     if _check_video_type(video):
         return
@@ -74,14 +88,14 @@ def _get_height_video(video):
     return height
 
 
-def _get_total_frames(video):
-    """[summary]
+def _get_total_frames(video: cv2.VideoCapture) -> int:
+    """Get the total frames of the video.
 
     Args:
-        video ([type]): [description]
+        video (cv2.VideoCapture): Video for which the frame rate is required.
 
     Returns:
-        [type]: [description]
+        int: Total frames of the video.
     """
     if _check_video_type(video):
         return
@@ -90,12 +104,14 @@ def _get_total_frames(video):
     return total_frames
 
 
-def _check_video_type(video):
-    """[summary]
+def _check_video_type(video: cv2.VideoCapture):
+    """Check if the video is of required type.
 
     Args:
-        video ([type]): [description]
+        video (cv2.VideoCapture): Video for which the frame rate is required.
+
+    Raises:
+        ValueError: If the video is not of type cv2.VideoCapture.
     """
     if not isinstance(video, cv2.VideoCapture):
-        info_logger.error("Video object is not from CV2.", object_type=type(video))
-        return
+        raise ValueError(f"Video object is not from CV2. {type(video)}")

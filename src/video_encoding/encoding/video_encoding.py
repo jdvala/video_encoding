@@ -1,9 +1,10 @@
 import os
+from collections import namedtuple
 
 import cv2
 import s3fs
 import structlog
-from moviepy.editor import VideoClip, VideoFileClip
+from moviepy.editor import AudioFileClip, VideoClip, VideoFileClip
 
 from video_encoding.encoding.local import create_temp_folder
 from video_encoding.encoding.utils import clean_up, get_file_name_extension
@@ -15,8 +16,14 @@ encoding_logger = structlog.get_logger(component="video_encoding")
 
 
 class Process:
-    def __init__(self, in_path, resolution, out_path):
+    def __init__(self, in_path: str, resolution: str, out_path: str) -> None:
+        """Process and convert the incoming video into the resolution provided.
 
+        Args:
+            in_path (str): Input path to the video to be encoded.
+            resolution (str): Value of the resolution to which the video is to be converted.
+            out_path (str): Path to store the encoded video.
+        """
         self.in_path = in_path
         self.out_path = out_path
         self.audio = None
@@ -31,39 +38,79 @@ class Process:
             out_path=self.out_path,
         )
 
-    def set_height_width_out(self):
+    def get_height_width_res(self) -> namedtuple:
+        """Get the height and width for a given resolution.
+
+        Returns:
+            namedtuple: Height and width for a given resolution.
+        """
         res = VideoResolution()
         named = res.get_w_h(self.resolution)
         return named
 
-    def split_audio_video(self):
+    def extract_audio(self) -> AudioFileClip:
+        """Extract audio from video.
+
+        Returns:
+            AudioFileClip: Audio extracted from the video.
+        """
         video = VideoFileClip(self.in_path)
 
         self.audio = video.audio
         encoding_logger.info("Audio extraction complete", in_path=self.in_path)
         return self.audio
 
-    def combine_audio(self, video_in_path):
+    def encode_audio(self, temp_video_path: str) -> VideoFileClip:
+        """Encode the audio into resized video.
 
-        video = VideoFileClip(video_in_path)
+        Args:
+            temp_video_path (str): Temporary file path where the resized video is stored.
+
+        Returns:
+            VideoFileClip : Final resized video to choosen resolution.
+        """
+        audio = self.extract_audio()
+        encoding_logger.info("Splitting of Audio and Video done.")
+
+        video = VideoFileClip(temp_video_path)
         final = video.set_audio(self.audio)
 
         return final
 
-    def encode_audio(self, temp_video_path):
-        audio = self.split_audio_video()
-        encoding_logger.info("Splitting of Audio and Video done.")
+    def writer_setup(
+        self, temp_path: str, fps: float, codec: str, width: int, height: int
+    ) -> cv2.VideoWriter:
+        """Video writer setup according to the original frame per second, codec, width and height.
 
-        final = self.combine_audio(temp_video_path)
-        return final
+        Here it is ensured that we preseve the original codec and frames per second (fps) of the original video. Hence the fps and the codec are extracted from the video information before the conversion of the video.
 
-    def writer_setup(self, temp_path, fps, codec, width, height):
+        Args:
+            temp_path (str): Temporary path where encoded video is stored.
+            fps (float): Frame per second of the original video before encoding. This is to preserve the fps from the original video.
+            codec (str): Video coded to be used. This is determined by the extension currently.
+            width (int): Width to set according to the resolution.
+            height (int): Height to set according to the resolution.
 
+        Returns:
+            cv2.VideoWriter: OpenCV video writer object with the settings from the original video.
+        """
         fourcc = cv2.VideoWriter_fourcc(*f"{codec}")
         writer = cv2.VideoWriter(temp_path, fourcc, fps, (width, height))
         return writer
 
-    def convert(self, video, writer, width, height):
+    def convert(
+        self, video: cv2.VideoCapture, writer: cv2.VideoWriter, width: int, height: int
+    ) -> None:
+        """Convert the video frame by frame into the provided resolution frame by frame.
+
+        # TODO: Make this function parallel.
+
+        Args:
+            video (cv2.VideoCapture): Video that is to be encoded into a given resolution.
+            writer (cv2.VideoWriter): Video writer which writes the encoded video frame by frame.
+            width (int): Width according to the resolution to be set for the video.
+            height (int): Height according to the resolution to be set for the video.
+        """
         while True:
             ret, frame = video.read()
             if ret == True:
@@ -82,12 +129,13 @@ class Process:
         encoding_logger.info("Cleaning up video conversion.")
         cv2.destroyAllWindows()
 
-    def encode_video(self):
-
+    @property
+    def encode_video(self) -> None:
+        """Encode the video and perform the process of conversion of and saving the video."""
         # read the video file with opencv
         encoding_logger.info("Reading video file from ", in_path=self.in_path)
 
-        res = self.set_height_width_out()
+        res = self.get_height_width_res()
 
         cap_video = cv2.VideoCapture(self.in_path)
 
