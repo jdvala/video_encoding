@@ -23,6 +23,7 @@ test:
 install:
 	pip install -r requirements/ci.txt -r requirements/docs.txt
 	pre-commit install
+	pip install -e .
 
 .PHONY: docs-build
 ## Build sphinx docs using projects README and module structure (sphinx-apidoc)
