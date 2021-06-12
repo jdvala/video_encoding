@@ -10,7 +10,6 @@ clean:
 .PHONY: lint
 ## Run linting
 lint:
-	python -m mypy src/
 	pre-commit run --all-files
 
 .PHONY: test
