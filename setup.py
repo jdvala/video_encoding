@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 here = Path(__file__).parent
 
-requirements_path = here / "requirements" / "prod.txt"
+requirements_path = here / "requirements" / "prod.lock"
 
 
 def read_requirements(path):
@@ -17,7 +17,7 @@ def read_requirements(path):
 
 setup(
     name="video_encoding",
-    python_requires=">=3.8.0",
+    python_requires=">=3.6.0",
     setup_requires=["setuptools_scm"],
     install_requires=read_requirements(requirements_path),
     use_scm_version={

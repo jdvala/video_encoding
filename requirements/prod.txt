@@ -2,6 +2,6 @@ opencv-python==4.5.2.52
 structlog==21.1.0
 numpy~=1.19.5
 fastapi[all]~=0.65.2
-uvicorn==0.14.0
+uvicorn>=0.12.0
 s3fs==2021.5.0
 moviepy~=1.0.2

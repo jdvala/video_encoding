@@ -18,8 +18,9 @@ Ready to contribute? Here's how to set up `video_encoding` for local development
 
     ```bash
     cd video_encoding/
-    pip install -e .[dev]
+    pip install -e .
     ```
+> When adding the requirements to `prod.txt` make sure to run `make lockfile`. This command will generate an extensive list of all the dependencies required by this project. This is done due to the fact that new pip resolver take a lot of time resolving dependencies across differnet requirements.
 
 4. Create a branch for local development:
 

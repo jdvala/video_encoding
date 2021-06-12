@@ -30,6 +30,12 @@ install:
 docs-build:
 	cd docs && make docs
 
+.PHONY: lockfile
+## Build a lockfile with pipgrip for fast pip resolution
+lockfile:
+	pipgrip --lock --sort --tree -vv -r requirements/prod.txt
+	mv pipgrip.lock requirements/prod.lock
+
 .PHONY: docs-show
 ## Open docs main page with default viewer (Linux || Mac)
 docs-show:
