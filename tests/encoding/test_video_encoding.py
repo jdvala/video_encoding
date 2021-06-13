@@ -33,3 +33,11 @@ def test_process(video_path: str) -> None:
 
         assert encoded_video.get(cv2.CAP_PROP_FRAME_HEIGHT) == 360.0
         assert encoded_video.get(cv2.CAP_PROP_FRAME_WIDTH) == 480.0
+
+        with pytest.raises(ValueError):
+            process_video = Process(
+                in_path="test_video.mp3",
+                resolution="360",
+                out_path=os.path.join(tmpdir, "test_video_360.mp3"),
+            )
+            process_video.encode_video

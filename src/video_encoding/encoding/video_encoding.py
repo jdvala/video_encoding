@@ -143,18 +143,24 @@ class Process:
         # read the video file with opencv
         encoding_logger.info("Reading video file from ", in_path=self.in_path)
 
-        res = self.get_height_width_res()
-
-        cap_video = self.load_video
-
         # Generate the information of the video
         file_name, file_extension = get_file_name_extension(self.in_path)
-
         encoding_logger.info(
             "File name and extension read complete",
             name=file_name,
             extension=file_extension,
         )
+
+        ext = file_extension.strip(".").upper()
+        # find the codec based on extension
+        if not ext in VideoFormat.list():
+            raise ValueError(
+                f"Invalid Format of the video {file_extension}, allowed extensions are {VideoFormat.list()}"
+            )
+
+        res = self.get_height_width_res()
+
+        cap_video = self.load_video
 
         video_information = get_video_information(cap_video)
         encoding_logger.info(
@@ -166,16 +172,6 @@ class Process:
         )
 
         encoding_logger.info("Setting up the encoder")
-
-        ext = file_extension.strip(".").upper()
-        # find the codec based on extension
-        if not ext in VideoFormat.list():
-            encoding_logger.error(
-                "Invalid Format of the video",
-                extension=file_extension,
-                allowed_extensions=VideoFormat.list(),
-            )
-            return
 
         codec = VideoFormat[ext].value
         encoding_logger.info("Setting up codec", codec=codec)
