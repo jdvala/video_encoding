@@ -4,7 +4,13 @@
 [![build](https://github.com/jdvala/video_encoding/actions/workflows/main.yml/badge.svg)](https://github.com/jdvala/video_encoding/actions/workflows/main.yml)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
-video encoding via opencv-python
+Video encoding via opencv-python
+
+`video_encoding` is a library used for encoding videos from one resolution to another resolution.
+
+> Note: It can not convert videos from one format to another format. For example, it can encode video (mp4) which is 1080p to 360p but it can not encode video from mp4 to avi.
+
+Internally it uses [OpenCV](https://opencv.org) and [moviepy](https://github.com/Zulko/moviepy)
 
 ---
 
