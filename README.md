@@ -1,6 +1,6 @@
 # video-encoding
 
-[![codecov](https://codecov.io/gh/jdvala/video_encoding/branch/master/graph/badge.svg?token=dEC138Lq1J)](https://codecov.io/gh/jdvala/video_encoding)
+[![codecov](https://codecov.io/gh/jdvala/video_encoding/branch/main/graph/badge.svg?token=dEC138Lq1J)](https://codecov.io/gh/jdvala/video_encoding)
 [![build](https://github.com/jdvala/video_encoding/actions/workflows/main.yml/badge.svg)](https://github.com/jdvala/video_encoding/actions/workflows/main.yml)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
