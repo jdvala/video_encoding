@@ -9,15 +9,13 @@ from video_encoding.encoding.video_information import get_video_information
 
 @pytest.fixture
 def load_video() -> cv2.VideoCapture:
-    video = cv2.VideoCapture(
-        "/home/jay-vala/video_encoding/tests/assets/test_video.mp4"
-    )
+    video = cv2.VideoCapture("tests/assets/test_video.mp4")
     return video
 
 
 @pytest.fixture
 def load_different_video() -> VideoFileClip:
-    video = VideoFileClip("/home/jay-vala/video_encoding/tests/assets/test_video.mp4")
+    video = VideoFileClip("tests/assets/test_video.mp4")
     return video
 
 
