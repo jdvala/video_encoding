@@ -194,5 +194,5 @@ class Process:
 
         encoding_logger.info("Encoding audio done, patching things up.")
         final_file.write_videofile(self.out_path, fps=video_information.frame_rate)
-        breakpoint()
+        encoding_logger.info("Cleaning up.")
         clean_up(temp_folder.name)

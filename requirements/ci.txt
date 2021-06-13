@@ -3,3 +3,7 @@ isort==5.8.0
 flake8==3.9.2
 pre-commit==2.13.0
 pipgrip==0.6.10
+pytest==6.2.4
+pytest-cov~=2.8
+pytest-env~=0.6
+pytest-sugar~=0.9

@@ -47,6 +47,16 @@ jobs:
       if: matrix.python-version == 3.8
       run: make lint
 
+    - name: Test
+      run: make test
+
+    - name: Codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        pip install codecov
+        codecov
+
 
   CD:
     needs: CI

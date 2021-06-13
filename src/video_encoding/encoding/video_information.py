@@ -31,6 +31,7 @@ def get_video_information(video: cv2.VideoCapture) -> Video_information:
     Returns:
         Video_information: Frame rate, width, height and total frames in a video.
     """
+    _check_video_type(video)
     frame_rate = _get_frame_rate(video)
     width = _get_width_video(video)
     height = _get_height_video(video)
@@ -50,13 +51,11 @@ def _get_frame_rate(video: cv2.VideoCapture) -> float:
     Returns:
         float: Frame rate of the video.
     """
-    if _check_video_type(video):
-        return
     frame_rate = video.get(cv2.CAP_PROP_FPS)
     return frame_rate
 
 
-def _get_width_video(video: cv2.VideoCapture) -> int:
+def _get_width_video(video: cv2.VideoCapture) -> float:
     """Get the height of the video.
 
     Args:
@@ -65,14 +64,11 @@ def _get_width_video(video: cv2.VideoCapture) -> int:
     Returns:
         int: Width of the video.
     """
-    if _check_video_type(video):
-        return
-
     width = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
     return width
 
 
-def _get_height_video(video: cv2.VideoCapture) -> int:
+def _get_height_video(video: cv2.VideoCapture) -> float:
     """Get the height of the video.
 
     Args:
@@ -81,14 +77,11 @@ def _get_height_video(video: cv2.VideoCapture) -> int:
     Returns:
         int: Height of the video.
     """
-    if _check_video_type(video):
-        return
-
     height = video.get(cv2.CAP_PROP_FRAME_HEIGHT)
     return height
 
 
-def _get_total_frames(video: cv2.VideoCapture) -> int:
+def _get_total_frames(video: cv2.VideoCapture) -> float:
     """Get the total frames of the video.
 
     Args:
@@ -97,9 +90,6 @@ def _get_total_frames(video: cv2.VideoCapture) -> int:
     Returns:
         int: Total frames of the video.
     """
-    if _check_video_type(video):
-        return
-
     total_frames = video.get(cv2.CAP_PROP_FRAME_COUNT)
     return total_frames
 
@@ -114,4 +104,4 @@ def _check_video_type(video: cv2.VideoCapture):
         ValueError: If the video is not of type cv2.VideoCapture.
     """
     if not isinstance(video, cv2.VideoCapture):
-        raise ValueError(f"Video object is not from CV2. {type(video)}")
+        raise ValueError(f"Video object is not from CV2. Its of type {type(video)}")
