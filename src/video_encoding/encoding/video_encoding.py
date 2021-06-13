@@ -16,13 +16,15 @@ encoding_logger = structlog.get_logger(component="video_encoding")
 
 
 class Process:
-    def __init__(self, in_path: str, resolution: str, out_path: str) -> None:
+    def __init__(self, in_path: str, out_path: str, resolution: str) -> None:
         """Process and convert the incoming video into the resolution provided.
 
         Args:
             in_path (str): Input path to the video to be encoded.
-            resolution (str): Value of the resolution to which the video is to be converted.
             out_path (str): Path to store the encoded video.
+            resolution (str): Value of the resolution to which the video is to be converted.
+            convert (bool): If True convert the video.
+            extract_audio (bool): If True extract audio.
         """
         self.in_path = in_path
         self.out_path = out_path
@@ -37,6 +39,11 @@ class Process:
             resolution=self.resolution,
             out_path=self.out_path,
         )
+
+    @property
+    def load_video(self):
+        video = cv2.VideoCapture(self.in_path)
+        return video
 
     def get_height_width_res(self) -> namedtuple:
         """Get the height and width for a given resolution.
@@ -58,6 +65,7 @@ class Process:
 
         self.audio = video.audio
         encoding_logger.info("Audio extraction complete", in_path=self.in_path)
+        breakpoint()
         return self.audio
 
     def encode_audio(self, temp_video_path: str) -> VideoFileClip:
@@ -69,7 +77,7 @@ class Process:
         Returns:
             VideoFileClip : Final resized video to choosen resolution.
         """
-        audio = self.extract_audio()
+        audio = self.extract_audio
         encoding_logger.info("Splitting of Audio and Video done.")
 
         video = VideoFileClip(temp_video_path)
@@ -137,7 +145,7 @@ class Process:
 
         res = self.get_height_width_res()
 
-        cap_video = cv2.VideoCapture(self.in_path)
+        cap_video = self.load_video
 
         # Generate the information of the video
         file_name, file_extension = get_file_name_extension(self.in_path)

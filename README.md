@@ -1,5 +1,9 @@
 # video-encoding
 
+[![codecov](https://codecov.io/gh/jdvala/video_encoding/branch/master/graph/badge.svg?token=dEC138Lq1J)](https://codecov.io/gh/jdvala/video_encoding)
+[![build](https://img.shields.io/github/workflow/status/jdvala/video_encoding/GH/master?logo=github&cacheSeconds=86400)](https://github.com/jdvala/video_encoding/actions?query=branch%3Amaster)
+[![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+
 video encoding via opencv-python
 
 ---
@@ -7,18 +11,23 @@ video encoding via opencv-python
 ## Features
 * Pure Python API for video encoding.
 * Uses OpenCV to convert the video.
-* Currently only supports local files
+
+
+## Limitations
+* Currently, only able to convert videos upto 2 hours. It is the current limitation set by OpenCV.
+* No conversion of videos from one format to another.
 
 
 ## Roadmap
+* Convert from one video format to different video format.
+* Extract audio from video.
 * Add s3 support.
 * Docker image.
-* Setup Actions.
-* Write tests.
 * Helm chart for easy deployment.
 * Multiprocessing in frame by frame video conversion.
 
-## Quick Start
+## Usage
+To encode video from one resolution to different one.
 ```python
 from video_encoding.encoding.video_encoding import Process
 
@@ -26,6 +35,10 @@ encode = Process(in_path="path/to/file", resolution="360", out_path="path/to/fil
 
 encode.encode_video
 ```
+
+To extract audio from video.
+```python
+from video_encoding.
 
 ## Installation
 **Stable Release:** `pip install video_encoding`<br>
