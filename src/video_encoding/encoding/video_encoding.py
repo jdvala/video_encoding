@@ -65,7 +65,7 @@ class Process:
 
         self.audio = video.audio
         encoding_logger.info("Audio extraction complete", in_path=self.in_path)
-        breakpoint()
+
         return self.audio
 
     def encode_audio(self, temp_video_path: str) -> VideoFileClip:
@@ -77,7 +77,7 @@ class Process:
         Returns:
             VideoFileClip : Final resized video to choosen resolution.
         """
-        audio = self.extract_audio
+        audio = self.extract_audio()
         encoding_logger.info("Splitting of Audio and Video done.")
 
         video = VideoFileClip(temp_video_path)
